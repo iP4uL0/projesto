@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FORMULARIO</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    
+    <div>
+        <label for="nome"></label>
+        <input type="hidden" id="userId">
+        <input 
+            type="text" 
+            name="name" 
+            id="name"
+            placeholder="Nome"
+            minlength="5"
+            required
+        >
+        <label for="email"></label>
+            <input 
+                type="text" 
+                name="email" 
+                id="email"
+                placeholder="E-mail"
+                pattern="^[^\s@]{1,}@[^@\s]{2,}\.[^\s@]{2,}$"
+                title="o e-mail deve conter @"
+                required
+            >
+        <button id="Salvar">Salvar</button>  
+
+       <div class="tabela">
+          <table>
+            <thead>
+                <tr>
+                    <th id="nomes">Nome</th>
+
+                    <th id="emails">Email</th>
+                    <th id="acoes">Ações</th>
+                </tr>
+            </thead>
+            <tbody id="userlist"></tbody>
+          </table>
+        </div>
+        
+        
+        <button>Editar</button>
+        <button>Excluir</button>    
+    </div>
+   <script src="script.js"></script>
+</body>
+</html>
+
+
+        
+ 
