@@ -65,11 +65,11 @@ app.post('/usuario/email', async (req, res)=>{
 
 
 
-//atualização de senhas: Pendente
-app.put('/email/usuario', async (req, res)=>{
+//Editar usuario
+app.put('/email/:usuario', async (req, res)=>{
     try{
         const {email, usuario} = req.body
-        await sql`update Gerenciador set usuario = ${usuario} where email = ${email};`
+        await sql`update Gerenciador set usuario =  ${usuario} where email = ${email};`
   
         return res.status(200).json('Ação efetuada')
     }
@@ -85,7 +85,7 @@ app.put('/email/usuario', async (req, res)=>{
 app.delete('/delete/:id', async(req, res)=>{
     try{
         const {id}= req.params
-        await sql`DELETE FROM Gerenciador WHERE condição; = ${id};`
+        await sql`DELETE FROM Gerenciador WHERE id_usuario = ${id};`
 
         return res.status(200).json('Ação efetuada')
     }
