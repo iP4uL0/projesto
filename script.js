@@ -1,14 +1,16 @@
 
+document.addEventListener("DOMContentLoaded", loadusers());
+
 //Função para carregar usuários do localStorage na tabela
 async function loadusers() {
     const userList = document.getElementById("userlist")
     userList.innerHTML = "";
 
     try{
-        let resposta = await fetch("http://localhost:3000/Gerenciador/")
+        let resposta = await fetch("http://localhost:3000/busca")
         let users = await resposta.json();
         console.log(users)
-        users.array.forEach(user => addUserToTable(user));
+        users.map((user) => addUserToTable(user));
     } catch (error) {
         console.error("erro ao carregar usuarios", error)
     }
@@ -32,11 +34,11 @@ botao_salvar.addEventListener("click", async function(event){
         await createUser(name, email); // Se não houver ID, cria um novo usuário 
     }  
 
-    form.reset(); // Limpa os campos do formulário após a submissão  
+     // Limpa os campos do formulário após a submissão  
 });  
 
 
-async function createUser(name, email) {
+async function createUser(usuario, email) {
 
     try {
         const response = await fetch("http://localhost:3000/usuario/email", {
@@ -44,7 +46,7 @@ async function createUser(name, email) {
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ name, email,}),
+            body: JSON.stringify({ usuario, email,}),
         });
 
         if (response.ok) {
@@ -63,31 +65,36 @@ async function createUser(name, email) {
 
 
 // Função para inserir usuário na tabela: PRONTO
-// function addUserToTable(user) {
-//     // let row = document.createElement("tr");
+function addUserToTable(user) {
+    const userList = document.getElementById("userlist")
 
-//     // let celula_nome = document.createElement("th");
-//     // celula_nome.innerText = `${user.name}`;
+    let row = document.createElement("tr");
 
-//     // let celula_email = document.createElement("th");
-//     // celula_email.innerText = `${user.email}`;
+    let celula_nome = document.createElement("th");
+    celula_nome.innerText = `${user.usuario}`;
 
-//     // let celula_botoes = document.createElement("th");
+    let celula_email = document.createElement("th");
+    celula_email.innerText = `${user.email}`;
 
-//     // let botao_editar = document.createElement("button");
-//     // botao_editar.innerText = "Editar";
-//     // botao_editar.addEventListener("click",  editUser(user.id));
+    let celula_botoes = document.createElement("th");
 
-//     // let botao_excluir = document.createElement("button");
-//     // botao_excluir.innerText = "Excluir";
-//     // botao_excluir.addEventListener("click",  deleteUser(user.id));
+    let botao_editar = document.createElement("button");
+    botao_editar.innerText = "Editar";
+    botao_editar.addEventListener("click", () => editUser(user.id_usuario));  // Corrigido
 
-//     // celula_botoes.append(botao_editar, botao_excluir);
-//     // row.append(celula_nome, celula_email, celula_botoes);
+    let botao_excluir = document.createElement("button");
+    botao_excluir.innerText = "Excluir";
+    botao_excluir.addEventListener("click", () => deleteUser(user.id_usuario));  // Corrigido
+
+    celula_botoes.append(botao_editar, botao_excluir);
+    row.append(celula_nome, celula_email, celula_botoes);
 
     // Adiciona a linha na tabela
     userList.appendChild(row);
-// }
+}
+
+
+
 
 
 //funcao excluir usuario: 
