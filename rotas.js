@@ -34,7 +34,7 @@ app.get('/busca/:usuario/:email',async (req, res)=>{
 app.get('/busca', async (req, res) => {
     try {
         // Consulta sem condições
-        const consulta = await sql`select * from Gerenciador;`
+        const consulta = await sql`select * from Gerenciador`
         
         if (consulta && consulta.length > 0) {
             return res.status(200).json(consulta)
@@ -49,7 +49,7 @@ app.get('/busca', async (req, res) => {
 
 
 //cadastro de usuario: Funcional
-app.post('/Gerenciador/usuario/email', async (req, res)=>{
+app.post('/usuario/email', async (req, res)=>{
     try{
         const {usuario, email} = req.body;
     await sql`insert into Gerenciador (usuario, email) values (${usuario}, ${email});`
