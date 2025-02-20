@@ -37,7 +37,7 @@ botao_salvar.addEventListener("click", async function(event){
      // Limpa os campos do formulário após a submissão  
 });  
 
-
+// criar o usuario 
 async function createUser(usuario, email) {
 
     try {
@@ -95,40 +95,45 @@ function addUserToTable(user) {
 
 
 
+//funcao excluir usuario: PRONTO
+// Excluir usuário
+async function deleteUser(id_usuario) {
+    try {
+        const res = await fetch(`http://localhost:3000/delete/${id_usuario}`,
+        {
+        method: "DELETE"
+        });
 
-
-//funcao excluir usuario: 
-document.querySelector("button")
-.addEventListener("click",()=>{
-    fetch(`http://localhost:3000/usuario/${email}`,{
-        method: 'DELETE',
-        headers: {
-            'Content-Type' : 'application/json'
+        if (res.ok) {
+            alert("Usuário excluído com sucesso!");
+            loadusers()
+        } else {
+            alert("Erro ao excluir usuário.");
         }
-    }).then((resposta)=>{
-        if(resposta.status != 200){
-            console.log(resposta.json())
-        }
-    })
-})
+    } catch (error) {
+        console.error("Erro ao excluir usuário:", error);
+        alert("Falha ao excluir usuário.");
+    }}
 
 
 // Função para editar
-document.querySelector("button")
-.addEventListener("click",()=>{
-    fetch(`http://localhost:3000/usuario/email/${id_usuario}`,{
-        method: 'PUT',
-        headers: {
-            'Content-Type' : 'application/json'
-        },
-        body: JSON.stringify({
-            "usuario" : document.querySelector("#usuario").value,
-            "email" : document.querySelector("#email").value
-           
-        })
-    }).then((resposta)=>{
-        if(resposta.status != 200){
-            console.log(resposta.json())
+async function editUser(usuario) {
+
+    try {
+        const res = await fetch(`http://localhost:3000/email/${usuario}`,
+        {
+        method: "PUT"
+        });
+
+        if (res.ok) {
+            alert("Usuário editado com sucesso!");
+            loadusers();
+        } else {
+            alert("Erro ao editar o usuário.");
         }
-    })
-})
+    } catch (error) {
+        console.error("Erro ao editar usuário:", error);
+        alert("Falha na edição usuário.");
+        
+    }
+}
